@@ -14,8 +14,15 @@ class AlphabetScrollView extends StatefulWidget {
       required this.selectedTextStyle,
       required this.unselectedTextStyle,
       this.itemExtent = 40,
-      required this.itemBuilder})
+      required this.itemBuilder,
+      this.physics,
+      this.padding, 
+      this.clipBehavior})
       : super(key: key);
+
+  final Clip? clipBehavior; 
+  final EdgeInsets? padding;
+  final ScrollPhysics? physics;
 
   /// List of Items should be non Empty
   /// and you must map your
@@ -207,7 +214,9 @@ class _AlphabetScrollViewState extends State<AlphabetScrollView> {
             controller: listController,
             scrollDirection: Axis.vertical,
             itemCount: _list.length,
-            physics: ClampingScrollPhysics(),
+            clipBehavior: widget.clipBehavior ?? Clip.hardEdge,
+            padding: widget.padding,
+            physics: widget.physics ?? ClampingScrollPhysics(),
             itemBuilder: (_, x) {
               return ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: widget.itemExtent),
